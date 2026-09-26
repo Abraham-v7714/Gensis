@@ -1,0 +1,223 @@
+@import "tailwindcss";
+
+/* ============================================================
+   GENSIS DESIGN TOKEN SYSTEM
+   Single source of truth for all design decisions.
+   Consumed via Tailwind CSS v4 @theme utilities.
+   ============================================================ */
+
+@theme {
+  /* ----------------------------------------------------------
+     BRAND COLORS
+     Core GENSIS palette — do not modify values.
+     ---------------------------------------------------------- */
+  --color-gensis-black:    #0A0A0A;
+  --color-gensis-ivory:    #F2F0EA;
+  --color-gensis-charcoal: #202020;
+  --color-gensis-stone:    #B7B1A6;
+  --color-gensis-sand:     #D8D0C3;
+
+  /* ----------------------------------------------------------
+     SEMANTIC COLOR TOKENS — BACKGROUND
+     ---------------------------------------------------------- */
+  --color-bg-primary:   var(--color-gensis-ivory);
+  --color-bg-secondary: var(--color-gensis-sand);
+  --color-bg-inverse:   var(--color-gensis-black);
+
+  /* ----------------------------------------------------------
+     SEMANTIC COLOR TOKENS — FOREGROUND
+     ---------------------------------------------------------- */
+  --color-fg-primary:   var(--color-gensis-black);
+  --color-fg-secondary: var(--color-gensis-charcoal);
+  --color-fg-muted:     var(--color-gensis-stone);
+  --color-fg-inverse:   var(--color-gensis-ivory);
+
+  /* ----------------------------------------------------------
+     SEMANTIC COLOR TOKENS — BORDER
+     ---------------------------------------------------------- */
+  --color-border-default: var(--color-gensis-stone);
+  --color-border-subtle:  var(--color-gensis-sand);
+
+  /* ----------------------------------------------------------
+     LEGACY ALIASES (consumed by layout.tsx body class)
+     ---------------------------------------------------------- */
+  --color-background: var(--color-bg-primary);
+  --color-foreground: var(--color-fg-primary);
+
+  /* ----------------------------------------------------------
+     TYPOGRAPHY — FONT FAMILIES
+     ---------------------------------------------------------- */
+  --font-sans:  var(--font-manrope);
+  --font-serif: var(--font-instrument-serif);
+
+  /* ----------------------------------------------------------
+     TYPOGRAPHY — SEMANTIC SCALE
+     Display/editorial roles use Instrument Serif.
+     Functional UI roles use Manrope.
+     ---------------------------------------------------------- */
+
+  /* Display — hero, brand statements */
+  --text-display:        clamp(3.5rem, 8vw, 7rem);
+  --leading-display:     1.05;
+  --tracking-display:    -0.02em;
+
+  /* Headline — section headers */
+  --text-headline:       clamp(2rem, 4vw, 3.5rem);
+  --leading-headline:    1.1;
+  --tracking-headline:   -0.015em;
+
+  /* Title — card titles, subsection headers */
+  --text-title:          clamp(1.25rem, 2.5vw, 1.75rem);
+  --leading-title:       1.2;
+  --tracking-title:      -0.01em;
+
+  /* Body — primary reading text */
+  --text-body:           1rem;
+  --leading-body:        1.6;
+  --tracking-body:       0em;
+
+  /* Small — secondary text, captions in context */
+  --text-small:          0.875rem;
+  --leading-small:       1.5;
+  --tracking-small:      0em;
+
+  /* Caption — metadata, timestamps, labels beneath imagery */
+  --text-caption:        0.75rem;
+  --leading-caption:     1.4;
+  --tracking-caption:    0.02em;
+
+  /* Label — uppercase functional labels, navigation, tags */
+  --text-label:          0.6875rem;
+  --leading-label:       1.4;
+  --tracking-label:      0.1em;
+
+  /* ----------------------------------------------------------
+     SPACING SCALE
+     Controlled editorial vocabulary.
+     Prefer these tokens over arbitrary values.
+     ---------------------------------------------------------- */
+  --spacing-px:   1px;
+  --spacing-0:    0rem;
+  --spacing-1:    0.25rem;   /*  4px */
+  --spacing-2:    0.5rem;    /*  8px */
+  --spacing-3:    0.75rem;   /* 12px */
+  --spacing-4:    1rem;      /* 16px */
+  --spacing-5:    1.25rem;   /* 20px */
+  --spacing-6:    1.5rem;    /* 24px */
+  --spacing-8:    2rem;      /* 32px */
+  --spacing-10:   2.5rem;    /* 40px */
+  --spacing-12:   3rem;      /* 48px */
+  --spacing-16:   4rem;      /* 64px */
+  --spacing-20:   5rem;      /* 80px */
+  --spacing-24:   6rem;      /* 96px */
+  --spacing-32:   8rem;      /* 128px */
+  --spacing-40:   10rem;     /* 160px */
+  --spacing-48:   12rem;     /* 192px */
+
+  /* ----------------------------------------------------------
+     LAYOUT TOKENS
+     ---------------------------------------------------------- */
+  --layout-content-width:   80rem;   /* 1280px — standard content */
+  --layout-wide-width:      90rem;   /* 1440px — wide editorial */
+  --layout-narrow-width:    40rem;   /* 640px  — reading width    */
+  --layout-gutter-mobile:   1.25rem;
+  --layout-gutter-tablet:   2rem;
+  --layout-gutter-desktop:  3rem;
+
+  /* ----------------------------------------------------------
+     BORDER RADIUS
+     Restrained — editorial fashion brand aesthetic.
+     ---------------------------------------------------------- */
+  --radius-none: 0rem;
+  --radius-sm:   0.125rem;
+  --radius-md:   0.25rem;
+  --radius-lg:   0.5rem;
+  --radius-full: 9999px;
+
+  /* ----------------------------------------------------------
+     BORDER WIDTH
+     ---------------------------------------------------------- */
+  --border-thin:    1px;
+  --border-default: 1px;
+  --border-medium:  2px;
+
+  /* ----------------------------------------------------------
+     SHADOWS
+     Used sparingly — avoid floating surfaces.
+     ---------------------------------------------------------- */
+  --shadow-sm:  0 1px 2px 0 rgb(10 10 10 / 0.06);
+  --shadow-md:  0 4px 12px 0 rgb(10 10 10 / 0.08);
+  --shadow-lg:  0 8px 24px 0 rgb(10 10 10 / 0.10);
+
+  /* ----------------------------------------------------------
+     MOTION
+     Movement with purpose. Small intentional vocabulary.
+     ---------------------------------------------------------- */
+  --duration-fast:   150ms;
+  --duration-normal: 300ms;
+  --duration-slow:   500ms;
+
+  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-in:      cubic-bezier(0.4, 0, 1, 1);
+  --ease-out:     cubic-bezier(0, 0, 0.2, 1);
+
+  /* ----------------------------------------------------------
+     Z-INDEX SCALE — semantic layers
+     ---------------------------------------------------------- */
+  --z-base:     0;
+  --z-dropdown: 100;
+  --z-sticky:   200;
+  --z-overlay:  300;
+  --z-modal:    400;
+  --z-toast:    500;
+}
+
+/* ============================================================
+   BASE LAYER
+   ============================================================ */
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-border-default);
+    border-style: solid;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    line-height: var(--leading-body);
+  }
+
+  /* ----------------------------------------------------------
+     FOCUS — accessible, visible for keyboard users
+     ---------------------------------------------------------- */
+  :focus-visible {
+    outline: var(--border-medium) solid var(--color-gensis-black);
+    outline-offset: 3px;
+  }
+
+  /* ----------------------------------------------------------
+     REDUCED MOTION — respect user preference
+     ---------------------------------------------------------- */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::after,
+    ::before {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
