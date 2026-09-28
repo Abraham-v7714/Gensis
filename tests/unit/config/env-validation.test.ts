@@ -91,9 +91,26 @@ describe("Environment & Secrets Validation (Stage 4.16)", () => {
     process.env.SANITY_PROJECT_ID = "test_sanity_proj";
     process.env.SANITY_REVALIDATE_SECRET = "webhook_secret_123456";
     process.env.NEXT_PUBLIC_SITE_URL = "https://gensis.com";
+    process.env.KV_REST_API_URL = "https://example-kv.upstash.io";
+    process.env.KV_REST_API_TOKEN = "kv_token_secret_123";
 
     const result = validateEnv({ isProduction: true });
     expect(result.valid).toBe(true);
     expect(result.errors).toHaveLength(0);
+  });
+
+  it("fails in production when KV_REST_API_URL or KV_REST_API_TOKEN is missing", () => {
+    process.env.AUTH_SECRET = "super_secure_random_key_that_is_at_least_32_characters_long!";
+    delete process.env.KV_REST_API_URL;
+    delete process.env.KV_REST_API_TOKEN;
+
+    const result = validateEnv({ isProduction: true });
+    expect(result.valid).toBe(false);
+    expect(result.errors).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("KV_REST_API_URL is required in production"),
+        expect.stringContaining("KV_REST_API_TOKEN is required in production"),
+      ])
+    );
   });
 });

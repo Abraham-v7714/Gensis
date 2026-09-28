@@ -13,6 +13,7 @@
  */
 
 import type { SessionTokens } from "./types";
+import { RedisTokenStore } from "./redisTokenStore";
 
 export interface TokenStore {
   get(sessionId: string): Promise<SessionTokens | null>;
@@ -68,6 +69,11 @@ export function setTokenStore(store: TokenStore | null): void {
  * Resolves the currently active TokenStore.
  */
 export function getTokenStore(): TokenStore {
+  if (!activeStore && process.env.NODE_ENV === "production") {
+    if (process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN) {
+      activeStore = new RedisTokenStore();
+    }
+  }
   return activeStore || devFallbackStore;
 }
 
@@ -83,3 +89,4 @@ export const tokenStore: TokenStore = {
     return getTokenStore().delete(sessionId);
   },
 };
+

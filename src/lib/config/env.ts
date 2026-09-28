@@ -53,6 +53,8 @@ export function validateEnv(options: ValidateEnvOptions = {}): EnvValidationResu
     "NEXT_PUBLIC_SANITY_API_WRITE_TOKEN",
     "NEXT_PUBLIC_SANITY_REVALIDATE_SECRET",
     "NEXT_PUBLIC_AUTH_SECRET",
+    "NEXT_PUBLIC_KV_REST_API_URL",
+    "NEXT_PUBLIC_KV_REST_API_TOKEN",
   ];
 
   for (const varName of leakedPrefixes) {
@@ -129,6 +131,22 @@ export function validateEnv(options: ValidateEnvOptions = {}): EnvValidationResu
       }
     } catch {
       errors.push(`NEXT_PUBLIC_SITE_URL is not a valid URL: ${siteUrl}`);
+    }
+  }
+
+  // 6. Upstash Redis TokenStore Validation (Stage 4.19)
+  const kvUrl = process.env.KV_REST_API_URL;
+  const kvToken = process.env.KV_REST_API_TOKEN;
+  if (isProd) {
+    if (!kvUrl) {
+      errors.push(
+        "KV_REST_API_URL is required in production for persistent TokenStore session storage."
+      );
+    }
+    if (!kvToken) {
+      errors.push(
+        "KV_REST_API_TOKEN is required in production for persistent TokenStore session storage."
+      );
     }
   }
 
