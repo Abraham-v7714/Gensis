@@ -21,6 +21,5 @@ export function getSanityClient() {
     dataset: sanityConfig.dataset,
     apiVersion: sanityConfig.apiVersion,
     useCdn: sanityConfig.useCdn,
-    token: sanityConfig.token,
   });
 }
