@@ -41,7 +41,6 @@ const VARIANT_FRAGMENT = /* GraphQL */ `
 `;
 
 const PRODUCT_FRAGMENT = /* GraphQL */ `
-  ${MONEY_FRAGMENT}
   ${IMAGE_FRAGMENT}
   ${VARIANT_FRAGMENT}
   fragment productFields on Product {
@@ -188,7 +187,6 @@ const USER_ERROR_FRAGMENT = /* GraphQL */ `
 `;
 
 const CART_LINE_FRAGMENT = /* GraphQL */ `
-  ${MONEY_FRAGMENT}
   ${IMAGE_FRAGMENT}
   ${VARIANT_FRAGMENT}
   fragment cartLineFields on BaseCartLine {
@@ -216,7 +214,6 @@ const CART_LINE_FRAGMENT = /* GraphQL */ `
 `;
 
 const CART_FRAGMENT = /* GraphQL */ `
-  ${MONEY_FRAGMENT}
   ${CART_LINE_FRAGMENT}
   fragment cartFields on Cart {
     id
