@@ -14,7 +14,7 @@ describe("Security Headers Policy (Stage 4.16)", () => {
     const headerEntries = await nextConfig.headers();
     expect(headerEntries.length).toBeGreaterThan(0);
 
-    const storefrontHeaders = headerEntries.find((entry) => entry.source === "/((?!studio).*)");
+    const storefrontHeaders = headerEntries.find((entry) => entry.source.startsWith("/((?!studio"));
     expect(storefrontHeaders).toBeDefined();
 
     const headersMap = new Map(

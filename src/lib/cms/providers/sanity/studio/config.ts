@@ -74,7 +74,6 @@ const storefront =
 export const gensisStudioConfig = defineConfig({
   name: "gensis-studio",
   title: "GENSIS Editorial Studio",
-  basePath: "/studio",
 
   projectId,
   dataset,

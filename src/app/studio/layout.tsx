@@ -1,5 +1,5 @@
 /**
- * Sanity Studio Layout — Stage 4.2
+ * Sanity Studio Layout — Stage 4.2 / Updated Stage 4.19
  *
  * Isolated layout for the /studio route subtree.
  * This layout REPLACES the root storefront layout (src/app/layout.tsx)
@@ -12,21 +12,17 @@
  *   - Studio-required CSS reset/baseline
  *   - Correct HTML structure for Sanity Studio v3
  *
- * Authentication:
- *   Sanity Studio handles authentication internally using Sanity's own
- *   auth system. Editors sign in with their Sanity account credentials
- *   (or SSO if configured in the Sanity project settings).
- *   No custom auth middleware is implemented at this stage.
- *
- * Access control:
- *   /studio is not protected by application-level middleware.
- *   Sanity Studio's own session-based auth prevents unauthorized content
- *   editing. Route-level middleware protection is deferred to Stage 4.3+.
+ * Sanity Dashboard Bridge:
+ *   Includes Sanity's recommended preloadModule and async module script
+ *   injection for bridge.js. Strictly isolated to the /studio layout only.
  */
 
 import type { Metadata, Viewport } from "next";
+import { preloadModule } from "react-dom";
 import { NextStudioLayout } from "next-sanity/studio";
 import { metadata as studioMetadata, viewport as studioViewport } from "next-sanity/studio";
+
+const bridgeScript = "https://core.sanity-cdn.com/bridge.js";
 
 export const metadata: Metadata = {
   ...studioMetadata,
@@ -44,5 +40,12 @@ export default function StudioLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <NextStudioLayout>{children}</NextStudioLayout>;
+  preloadModule(bridgeScript, { as: "script" });
+
+  return (
+    <>
+      <script src={bridgeScript} async type="module" />
+      <NextStudioLayout>{children}</NextStudioLayout>
+    </>
+  );
 }
