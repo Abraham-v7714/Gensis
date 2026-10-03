@@ -14,11 +14,11 @@ describe("Security Headers Policy (Stage 4.16)", () => {
     const headerEntries = await nextConfig.headers();
     expect(headerEntries.length).toBeGreaterThan(0);
 
-    const rootHeaders = headerEntries.find((entry) => entry.source === "/(.*)");
-    expect(rootHeaders).toBeDefined();
+    const storefrontHeaders = headerEntries.find((entry) => entry.source === "/((?!studio).*)");
+    expect(storefrontHeaders).toBeDefined();
 
     const headersMap = new Map(
-      rootHeaders?.headers.map((h) => [h.key.toLowerCase(), h.value])
+      storefrontHeaders?.headers.map((h) => [h.key.toLowerCase(), h.value])
     );
 
     // X-Content-Type-Options
@@ -36,5 +36,15 @@ describe("Security Headers Policy (Stage 4.16)", () => {
 
     // DNS prefetch
     expect(headersMap.get("x-dns-prefetch-control")).toBe("on");
+
+    // Studio framing policy check
+    const studioHeaders = headerEntries.find((entry) => entry.source === "/studio/:path*");
+    expect(studioHeaders).toBeDefined();
+
+    const studioMap = new Map(
+      studioHeaders?.headers.map((h) => [h.key.toLowerCase(), h.value])
+    );
+    expect(studioMap.get("x-frame-options")).toBeUndefined();
+    expect(studioMap.get("content-security-policy")).toContain("frame-ancestors 'self' https://*.sanity.io https://*.sanity.build;");
   });
 });
